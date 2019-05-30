@@ -165,12 +165,12 @@ typedef map<int, TST> TCM;
 //  typedef hash_map<string, vector<TFE>, hash<string>, eqstr> THM;
 
 // added by Shenzhi, in testing
-typedef hash_map<string, map<pair<int,int>,double>, hash<string>, eqstr> THM;
+typedef hash_map<string, map<pair<int,int>,double>, __gnu_cxx::hash<string>, eqstr> THM;
 
   // Why this name: type, hash, key, lookup
-  typedef hash_map<string, int, hash<string>, eqstr> THKL; 
+  typedef hash_map<string, int, __gnu_cxx::hash<string>, eqstr> THKL; 
   // Why this name: type, hash, label, lookup
-  typedef hash_map<string, vector<TID>, hash<string>, eqstr> THLL;
+  typedef hash_map<string, vector<TID>, __gnu_cxx::hash<string>, eqstr> THLL;
 
   typedef hash_map<int, double> TSM; // the sum of values in each model
   typedef hash_map<int, TCM > TACM; // the accumulator type, for each model 
