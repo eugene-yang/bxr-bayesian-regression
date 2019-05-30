@@ -92,7 +92,7 @@ private:
         ParamMatrix& beta  // i/0: init/result values of model coeffs, 
 	);
     
-    void LRModel::ZOLRBinary(
+    void ZOLRBinary( // EUGENE
 	MemRowSetIterator& rowSet,
 	const InvData& invData, //input - generates design data
 	const BayesParameter& bayesParam, //input

@@ -5,7 +5,7 @@
 #define _BAYES_PARAMETER_HPP
 
 #include <ostream>
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <stdexcept>
 #include <vector>
@@ -158,7 +158,8 @@ public:
             char* var = strtok((char*)strHP.c_str(),", ");
             while( var ) {
 		double d;
-                if(var=="inf")
+                // if(var=="inf")
+                if( strcmp(var, "inf") == 0 )
 		    d = std::numeric_limits<double>::infinity();
                 else 
                     d = atof(var);

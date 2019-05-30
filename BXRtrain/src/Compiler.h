@@ -17,7 +17,7 @@
 // TODO: Move to util.h
 bool readFromStdin(const char* fname); 
 
-typedef unsigned YType;
+// typedef unsigned YType;
 
 
 #endif // _COMPILER_H

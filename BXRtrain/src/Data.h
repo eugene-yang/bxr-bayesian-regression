@@ -85,7 +85,7 @@ public:
 #endif
 
 #ifdef USE_GCC
-typedef hash_map<string, int, hash<string>, eqstr> SIHM;  // SIHM == String Integer Hash Map 
+typedef hash_map<string, int, __gnu_cxx::hash<string>, eqstr> SIHM;  // SIHM == String Integer Hash Map 
 #endif 
 #ifdef _MSC_VER 
   #if _MSC_VER >= 1300
@@ -157,7 +157,7 @@ class RowSetMetadata {
 	m_classes(classes_), m_features(features_), 
 	m_addClasses(addclasses_), m_addFeats(addfeats_),
 	m_nonactiveFeats(nafeats_),
-	m_nonactiveCoeflevelFeats(nacf_),
+	m_nonactiveCoeflevelFeats(nacf_)
 	{
 	    _checkrefclass(refclsid);
 	}
@@ -443,7 +443,7 @@ public:
     }
 
     RowSetIterator* iterator();
-    PlainYRowSetIterator* plainYiterator();
+    class PlainYRowSetIterator* plainYiterator();
     
 };
 
