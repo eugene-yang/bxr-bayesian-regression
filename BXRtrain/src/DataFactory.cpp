@@ -6,13 +6,15 @@ SL Mar25,08:  convert 0 in indprior file to @constant if defined SYMBOLIC
 #include "DataFactory.h"
 #include "PolyZO.h"
 
+using namespace DD;
+
 DataFactory::DataFactory() {
     // Set everything directly from Cython
 }
 
-int DataFactory::testing( int a ) {
-    return a + 10;
-}
+// void DataFactory::testing()  {
+    
+// }
 
 void DataFactory::setTestAndTrainFileSpec( 
     string trainFile_,

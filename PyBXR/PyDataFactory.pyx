@@ -1,28 +1,37 @@
 # distutils: language = c++
-
 # Cython wrapper around DataFactory
 
 from libcpp cimport bool
 from cython.operator import dereference
 
-cdef extern from "DataFactory.h" namespace "DataFactory" nogil:
+cdef extern from "DataFactory.cpp" namespace "DD" nogil:
     cdef cppclass DataFactory:
-        DataFactory(bool)
-        void readFiles()
-        int testing(int)
+        DataFactory()
+        int testing()
 
-# cdef extern from "DataFactoryPython.cpp" nogil:
+# cdef extern from "DataFactory.h" nogil:
+#     cdef cppclass DataFactory:
+#         # DataFactory(bool)
+#         # DataFactory()
+#         # void readFiles()
+#         int testing()
+#         # int ttt
+
+
+
+# cdef extern from "../BXRtrain/src/DataFactory.cpp" nogil:
 #     pass
 
-cdef class PyDataFactory():
+cdef class PyDataFactory:
     cdef DataFactory *c_df
 
     def __cinit__(self):
         # pass
-        self.c_df = new DataFactory(True)
+        self.c_df = new DataFactory()
     
     def tt(self, int a):
-        return dereference( self.c_df ).testing( a )
+        # return a
+        return dereference( self.c_df ).testing()
     
         
         

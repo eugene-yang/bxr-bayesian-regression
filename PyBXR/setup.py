@@ -44,11 +44,11 @@ if __name__ == '__main__':
 #         ext_modules = cythonize([
 #             Extension('PyDataFactory', sources=['PyDataFactory.pyx'],
 #                       language="c++",
-#                       include_dirs=['./', '../BXRtrain/src', '../BXRClassify'],
+#                       include_dirs=['./', '../BXRtrain/src', '../BXRClassify/src'],
 #                       extra_compile_args=_BXR_compile_flags),
-#             Extension('testing', sources=['testing.pyx'],
-#                       language="c++",
-#                       include_dirs=['./'])
+#             # Extension('testing', sources=['testing.pyx'],
+#             #           language="c++",
+#             #           include_dirs=['./'])
 #         ]),
 #         cmdclass = { 'build_ext': build_ext }
 #     )

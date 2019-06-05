@@ -30,9 +30,7 @@
 #include "Data.h"
 #include "IndividualPriors.h"
 
-using namespace std;
-
-namespace DataFactory {
+namespace DD{
 
 class DataFactory  {
 
@@ -71,9 +69,12 @@ class DataFactory  {
     }
 
     // For Python interface
-    DataFactory(); // with everything set
+    // DataFactory(){}; // with everything set
+    DataFactory();
 
-    int testing(int);
+    int testing(){ return 100; }
+    // int ttt = 10;
+
 
     void setTestAndTrainFileSpec( 
         string trainFile_,

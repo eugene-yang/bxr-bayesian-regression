@@ -1,3 +1,3 @@
 from PyDataFactory import PyDataFactory
 
-PyDataFactory()
+print( PyDataFactory().tt(12) ) 
