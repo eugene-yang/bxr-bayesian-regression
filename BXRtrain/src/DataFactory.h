@@ -30,7 +30,6 @@
 #include "Data.h"
 #include "IndividualPriors.h"
 
-namespace DD{
 
 class DataFactory  {
 
@@ -69,11 +68,11 @@ class DataFactory  {
     }
 
     // For Python interface
-    // DataFactory(){}; // with everything set
-    DataFactory();
+    DataFactory(){}; // with everything set
+    // DataFactory();
 
-    // int testing(){ return 100; }
-    int testing();
+    int testing(){ return 100; }
+    // int testing();
     // int ttt = 10;
 
 
@@ -119,7 +118,7 @@ class DataFactory  {
 
     ModeVarSkew _parsePriorsLine(istringstream& s);
 };
-}
+
 #endif //DATA_FACTORY_
 
 /*

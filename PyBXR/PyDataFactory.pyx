@@ -4,7 +4,7 @@
 from libcpp cimport bool
 from cython.operator import dereference
 
-cdef extern from "DataFactory.cpp" namespace "DD" nogil:
+cdef extern from "DataFactory.h"  nogil:
     cdef cppclass DataFactory:
         DataFactory()
         int testing()
