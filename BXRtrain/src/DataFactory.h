@@ -32,6 +32,7 @@
 
 using namespace std;
 
+namespace DataFactory {
 
 class DataFactory  {
 
@@ -68,6 +69,11 @@ class DataFactory  {
 
     DataFactory(bool symbolic_) {
     }
+
+    // For Python interface
+    DataFactory(); // with everything set
+
+    int testing(int);
 
     void setTestAndTrainFileSpec( 
         string trainFile_,
@@ -111,7 +117,7 @@ class DataFactory  {
 
     ModeVarSkew _parsePriorsLine(istringstream& s);
 };
-
+}
 #endif //DATA_FACTORY_
 
 /*

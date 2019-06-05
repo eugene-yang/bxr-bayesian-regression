@@ -1,7 +1,7 @@
 # C++ objects
 
 CC=g++-9
-CFLAGS=-O0 -c -g -std=c++11 -Wno-deprecated -I../src/tclap-1.0.5/include -I../src -DUSE_GCC -DSYMBOLIC
+CFLAGS=-O0 -c -g -Wno-deprecated -I../src/tclap-1.0.5/include -I../src -DUSE_GCC -DSYMBOLIC
 LDFLAGS=-G
 SOURCES=DataFactory.cpp Matrix.cpp StrataSplit.cpp Milliseconds.cpp OutputFormat.cpp Likelihood.cpp PolyZO.cpp QNOpt.cpp CommandLine.cpp
 CSOURCES=blmvm-1.1ez.c
