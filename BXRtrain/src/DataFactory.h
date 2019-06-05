@@ -72,7 +72,8 @@ class DataFactory  {
     // DataFactory(){}; // with everything set
     DataFactory();
 
-    int testing(){ return 100; }
+    // int testing(){ return 100; }
+    int testing();
     // int ttt = 10;
 
 

@@ -12,9 +12,9 @@ DataFactory::DataFactory() {
     // Set everything directly from Cython
 }
 
-// void DataFactory::testing()  {
-    
-// }
+int DataFactory::testing()  {
+    return 100;
+}
 
 void DataFactory::setTestAndTrainFileSpec( 
     string trainFile_,
