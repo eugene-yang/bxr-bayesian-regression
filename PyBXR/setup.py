@@ -7,7 +7,7 @@ from pathlib import Path
 os.environ["CC"] = "g++-9"
 os.environ["CXX"] = "g++-9"
 
-_BXR_compile_flags = ['-O0', '-c', '-Wall', '-g', '-force_flat_namespace', '-Wno-sign-compare', '-Wno-reorder', '-DUSE_GCC']
+_BXR_compile_flags = ['-O0', '-c', '-Wall', '-g', '-Wno-sign-compare', '-Wno-reorder', '-DUSE_GCC']
 
 def configuration(parent_package='', top_path=None):
     from numpy.distutils.misc_util import Configuration
