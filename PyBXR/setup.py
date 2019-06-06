@@ -2,10 +2,12 @@ import os
 from Cython.Build import cythonize
 import numpy
 
+from pathlib import Path
+
 os.environ["CC"] = "g++-9"
 os.environ["CXX"] = "g++-9"
 
-_BXR_compile_flags = ['-O0', '-c', '-g', '-Wno-sign-compare', '-Wno-reorder', '-DUSE_GCC']
+_BXR_compile_flags = ['-O0', '-c', '-Wall', '-g', '-force_flat_namespace', '-Wno-sign-compare', '-Wno-reorder', '-DUSE_GCC']
 
 def configuration(parent_package='', top_path=None):
     from numpy.distutils.misc_util import Configuration
@@ -15,6 +17,9 @@ def configuration(parent_package='', top_path=None):
     libraries = []
     if os.name == 'posix':
         libraries.append('m')
+    
+    all_source = [ str(p) for p in Path("../BXRtrain/src").glob("*.cpp") ]
+    # all_source.remove("../BXRtrain/src/CommandLine.cpp")
 
     # config.add_extension('cd_fast',
     #                      sources=['cd_fast.pyx'],
@@ -22,7 +27,7 @@ def configuration(parent_package='', top_path=None):
     #                      libraries=libraries)
     
     config.add_extension('PyDataFactory',
-                        sources=['PyDataFactory.pyx'],
+                        sources=['PyDataFactory.pyx', "../BXRtrain/src/DataFactoryPython.cpp"],
                         include_dirs=['./', '../BXRtrain/src', '../BXRClassify/src'],
                         extra_compile_args=_BXR_compile_flags)
     

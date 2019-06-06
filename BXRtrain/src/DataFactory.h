@@ -68,13 +68,14 @@ class DataFactory  {
     }
 
     // For Python interface
-    DataFactory(){}; // with everything set
-    // DataFactory();
+    // DataFactory(){}; // with everything set
+    DataFactory();
 
-    int testing(){ return 100; }
-    // int testing();
-    // int ttt = 10;
-
+    // int testing(){ 
+    //     // readFiles(); 
+    //     return 100;
+    // }
+    int testing(int);
 
     void setTestAndTrainFileSpec( 
         string trainFile_,

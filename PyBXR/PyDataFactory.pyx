@@ -1,26 +1,20 @@
 # distutils: language = c++
 # Cython wrapper around DataFactory
 
-from libcpp cimport bool
+from libcpp cimport string
 from cython.operator import dereference
 
-cdef extern from "DataFactory.h"  nogil:
+
+cdef extern from "DataFactory.h" nogil:
     cdef cppclass DataFactory:
+        # DataFactory(bool)
         DataFactory()
-        int testing()
+        # void readFiles()
+        int testing(int)
+        # void MakeSparseMatrix(string)
+        # void ttt()
+        # int ttt
 
-# cdef extern from "DataFactory.h" nogil:
-#     cdef cppclass DataFactory:
-#         # DataFactory(bool)
-#         # DataFactory()
-#         # void readFiles()
-#         int testing()
-#         # int ttt
-
-
-
-# cdef extern from "../BXRtrain/src/DataFactory.cpp" nogil:
-#     pass
 
 cdef class PyDataFactory:
     cdef DataFactory *c_df
@@ -31,7 +25,10 @@ cdef class PyDataFactory:
     
     def tt(self, int a):
         # return a
-        return dereference( self.c_df ).testing()
+        # dereference( self.c_df ).readFiles()
+        # return dereference( self.c_df ).testing(a)
+        # self.c_df.MakeSparseMatrix("123".encode())
+        return self.c_df.testing(a)
     
         
         
