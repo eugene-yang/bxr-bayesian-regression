@@ -31,7 +31,7 @@ def configuration(parent_package='', top_path=None):
                         include_dirs=['./', '../BXRtrain/src', '../BXRclassify/src'],
                         extra_compile_args=_BXR_compile_flags)
     
-    config.ext_modules = cythonize(config.ext_modules)
+    config.ext_modules = cythonize(config.ext_modules, gdb_debug=True)
 
     return config
 

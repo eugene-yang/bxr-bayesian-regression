@@ -822,7 +822,7 @@ void LRModel::ZOLR(
 			linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
 		    
 		    // Log(11) <<"dw_numerator="<<dw_numerator<<"; dw_denominator=" << dw_denominator 
-		    <<"; dw="<<dw<<endl; 
+		    // <<"; dw="<<dw<<endl; 
                 }
                 else { //Laplace
                     if( beta(j,k)-m_priorMode(j,k)>0 ) { //step for positive
@@ -844,14 +844,16 @@ void LRModel::ZOLR(
 			if (skewAllowsPositiveDirection) { 
                             dwPlus = OneCoordStep( -m_penalty(j,k), 0, range, invData, k, linearScores, linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
                             // if(!finite(dwPlus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
-			    else if (dwPlus < 0) dwPlus = 0;
+			    // else if (dwPlus < 0) dwPlus = 0;
+                if (dwPlus < 0) dwPlus = 0;
 			}
 
 			bool positiveDirectionSucceeded = (dwPlus > 0);
 			if (!positiveDirectionSucceeded && skewAllowsNegativeDirection) {
 			    dwMinus = OneCoordStep( m_penalty(j,k), 0, range, invData, k, linearScores, linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
                             // if(!finite(dwMinus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
-			    else if (dwMinus > 0) dwMinus = 0;
+			    // else if (dwMinus > 0) dwMinus = 0;
+                if (dwMinus > 0) dwMinus = 0;
 			}
 			
 			dw = dwPlus + dwMinus;
@@ -1126,8 +1128,8 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
         double bestEval = - numeric_limits<double>::max();
         unsigned bestParam = unsigned(-1);
         // Log(6)<<"\nCross-validation results - hyperparameter values, "
-	      <<(Laplace==hyperParamPlan.getPriorType()?"prior var, ":"")
-	      <<"cv mean loglikelihood, std.error:";
+	    //   <<(Laplace==hyperParamPlan.getPriorType()?"prior var, ":"")
+	    //   <<"cv mean loglikelihood, std.error:";
         for( unsigned i=0; i<planSize; i++ ) {
             if( lglkliMean[i]>bestEval ) {
                 bestEval = lglkliMean[i];

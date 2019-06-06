@@ -299,12 +299,12 @@ QN_BLMVM(
 		    modelType, fixedParams, w, indprior );
 
     // Log(3)<<endl<<"Starting BLMVM optimization, "
-	  <<( Laplace==bayesParam.getPriorType() ? 
-	      ( ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() ? "Smoothed, " : "Double coordinates, ") //Crude L1
-	      : "" )
-	  <<"Time "<<Log.time();
+	//   <<( Laplace==bayesParam.getPriorType() ? 
+	//       ( ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() ? "Smoothed, " : "Double coordinates, ") //Crude L1
+	//       : "" )
+	//   <<"Time "<<Log.time();
     
-    if( Laplace==bayesParam.getPriorType() && ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() )
+    // if( Laplace==bayesParam.getPriorType() && ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() )
         // Log(3)<<"\nesmooth "<<context.set_esmooth( 1e-25 ); //1e+200*numeric_limits<double>::min() );
     
     /*for(unsigned i=0;i<nparams;i++) Log(8)<<"\nx "<<x[i];dbg*/
