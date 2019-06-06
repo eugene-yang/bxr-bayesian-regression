@@ -28,7 +28,7 @@ def configuration(parent_package='', top_path=None):
     
     config.add_extension('PyDataFactory',
                         sources=['PyDataFactory.pyx', "../BXRtrain/src/DataFactoryPython.cpp"],
-                        include_dirs=['./', '../BXRtrain/src', '../BXRClassify/src'],
+                        include_dirs=['./', '../BXRtrain/src', '../BXRclassify/src'],
                         extra_compile_args=_BXR_compile_flags)
     
     config.ext_modules = cythonize(config.ext_modules)
