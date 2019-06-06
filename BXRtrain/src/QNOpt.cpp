@@ -132,13 +132,13 @@ Context:: Context(
         hessInvDiagonal( d, c, 0.0 ),
         px(0), pxl(0), pxu(0)
 {
-    Log(0) << "\n Context 1 " << Log.time();
+    // Log(0) << "\n Context 1 " << Log.time();
     
     wCopy = new ParamMatrix(w_.numFeatures(), w_.numClasses());
     lastDiff = new ParamMatrix(w_.numFeatures(), w_.numClasses());
     priorMode = ParamMatrix(w_.numFeatures(),w_.numClasses());
 
-    Log(0) << "\n Context 2 " << Log.time();
+    // Log(0) << "\n Context 2 " << Log.time();
     if( data.dim()==priorMode.numFeatures() );
     else    throw DimensionConflict(__FILE__,__LINE__);
     
@@ -147,20 +147,20 @@ Context:: Context(
     nparams = c*d - fixedParams.count();
     nPseudoParams = dupcoord ? 2*nparams : nparams;
 
-    Log(0) << "\n Context 3 " << Log.time();
+    // Log(0) << "\n Context 3 " << Log.time();
     /* initial vector, lower bound, upperbound */
     px=(double*)malloc(nPseudoParams*sizeof(double)); 
     pxl=(double*)malloc(nPseudoParams*sizeof(double));
     pxu=(double*)malloc(nPseudoParams*sizeof(double));
 
-    Log(0) << "\n Context 4 " << Log.time();
+    // Log(0) << "\n Context 4 " << Log.time();
     /* set bounds: no bounds */
     for( unsigned i=0; i<nPseudoParams; i++ ) {
         pxl[i] = dupcoord ? 0 : -numeric_limits<double>::max();
         pxu[i] = numeric_limits<double>::max();
     }
 
-    Log(0) << "\n Context 5 " << Log.time();
+    // Log(0) << "\n Context 5 " << Log.time();
     /* initial point */
     square2flat( w, px );
     if(dupcoord)
@@ -168,7 +168,7 @@ Context:: Context(
             if( px[i]>=0 ) px[nparams+i]=0;
             else{ px[nparams+i]=-px[i]; px[i]=0; }
     
-    Log(0) << "\n Context 6 " << Log.time();
+    // Log(0) << "\n Context 6 " << Log.time();
     // init convergence data
     cc.fmin = 0; //-numeric_limits<double>::max(); -1e30;
     cc.pgtol = 1E-8; // modelType.ThrConverge(); //.001;
@@ -261,11 +261,11 @@ Context:: Context(
 	}
     */
 
-    Log(3)<<std::endl<<"No penalty for the intercept!";
+    // Log(3)<<std::endl<<"No penalty for the intercept!";
     if( penalty.size() != nparams )
         throw logic_error("Penalty array size exception");
     
-    Log(0) << "\n Context 7 " << Log.time();
+    // Log(0) << "\n Context 7 " << Log.time();
     
 }
 
@@ -298,21 +298,21 @@ QN_BLMVM(
     Context context(data, bayesParam, /*priorMode, priorScale,*/
 		    modelType, fixedParams, w, indprior );
 
-    Log(3)<<endl<<"Starting BLMVM optimization, "
+    // Log(3)<<endl<<"Starting BLMVM optimization, "
 	  <<( Laplace==bayesParam.getPriorType() ? 
 	      ( ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() ? "Smoothed, " : "Double coordinates, ") //Crude L1
 	      : "" )
 	  <<"Time "<<Log.time();
     
     if( Laplace==bayesParam.getPriorType() && ModelType::QuasiNewtonSmooth==modelType.getOptimizerType() )
-        Log(3)<<"\nesmooth "<<context.set_esmooth( 1e-25 ); //1e+200*numeric_limits<double>::min() );
+        // Log(3)<<"\nesmooth "<<context.set_esmooth( 1e-25 ); //1e+200*numeric_limits<double>::min() );
     
     /*for(unsigned i=0;i<nparams;i++) Log(8)<<"\nx "<<x[i];dbg*/
     int info=BLMVMSolveIt( (void*)&context,
 			   context.Low(), context.X(), context.Up(), context.NParams(), context.History() );
 
     // opt point (context has modified 'w' thru its reference)
-    Log(9)<<"\nFinal Beta "<<w;
+    // Log(9)<<"\nFinal Beta "<<w;
     string diagnos;
     switch(context.cc.whystop) {
         case 1: diagnos = "Solution found"; break;
@@ -321,9 +321,9 @@ QN_BLMVM(
         case 4: diagnos = "Min Objective reached"; break;
         default: diagnos = "Stopped due to numerical difficulties";
     }
-    Log(0)<<endl<<"Whystop " << context.cc.whystop<<endl;
-    Log(3)<<endl<<"Optimization finished "<<context.cc.iter<<" iterations, "<<diagnos<<", Time "<<Log.time();
-    Log(4)<<endl<<"Function/Gradient evaluations "<<context.cc.fgeval;
+    // Log(0)<<endl<<"Whystop " << context.cc.whystop<<endl;
+    // Log(3)<<endl<<"Optimization finished "<<context.cc.iter<<" iterations, "<<diagnos<<", Time "<<Log.time();
+    // Log(4)<<endl<<"Function/Gradient evaluations "<<context.cc.fgeval;
     
 }
 
@@ -390,7 +390,7 @@ int Context::FuncGrad( const double *x, double *gFlat, int n, double *f, double 
     if( n != nPseudoParams )
         throw logic_error("Wrong parameter vector size returned from BLMVMFunctionGradient");
 
-    Log(0) << "\nCheck 1 "<< Log.time();
+    // Log(0) << "\nCheck 1 "<< Log.time();
 
     //Log(0)<<"\nComputing gradient at X "; for(unsigned i=0;i<(dupcoord?2*nparams:nparams);i++) Log(0)<<" "<<x[i];
     {//flat2square( wFlat, w ); //fixed terms already there
@@ -404,7 +404,7 @@ int Context::FuncGrad( const double *x, double *gFlat, int n, double *f, double 
 		}
     }
     //Log(0)<<"\nBeta "<<w;
-    Log(0) << "\nCheck 2 "<< Log.time();
+    // Log(0) << "\nCheck 2 "<< Log.time();
     
     for( unsigned j=0; j<d; j++ ) {
 	for( unsigned k=0; k<c; k++ ) {
@@ -416,7 +416,7 @@ int Context::FuncGrad( const double *x, double *gFlat, int n, double *f, double 
 //    double** m2 = new double*[grad.numFeatures()];
 //    for (int i = 0; i < grad.numFeatures(); i++) m2[i] = new double[grad.numClasses()];
     
-    Log(0) << "\nCheck 3 "<< Log.time();
+    // Log(0) << "\nCheck 3 "<< Log.time();
     
     double lossTerm = 0;
     
@@ -573,11 +573,11 @@ int Context::FuncGrad( const double *x, double *gFlat, int n, double *f, double 
     //Log(0)<<"\nGradient at X is"; for(unsigned i=0;i<(dupcoord?2*nparams:nparams);i++) Log(0)<<" "<<gFlat[i];
     /*/suggested by S.Benson:*/
     if( ! finite(*f) ) {
-	Log(0)<<"Infinite F\n";
+	// Log(0)<<"Infinite F\n";
         *f = numeric_limits<double>::max();
         return 1;
     }
-    Log(0)<<"Finite F " << f << "\n";
+    // Log(0)<<"Finite F " << f << "\n";
     return 0;
 }
 
@@ -625,7 +625,7 @@ int Context::Converge( double *residual, int n, double stepsize, int *whystop )
 	}
         cc.pgnorm = sqrt(pgnorm);
     }
-    Log(0)<<"\nIter: "<<cc.iter<<", F: "<<cc.f<<",  pgnorm: "<<cc.pgnorm<<", Time "<<Log.time();
+    // Log(0)<<"\nIter: "<<cc.iter<<", F: "<<cc.f<<",  pgnorm: "<<cc.pgnorm<<", Time "<<Log.time();
     
     double diffsum = 0.0;
     double diffmax = 0.0;

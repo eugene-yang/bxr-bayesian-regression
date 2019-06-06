@@ -45,7 +45,7 @@ private:
         vector<double> meansqu( m_source.dim(), 0.0 );
         vector<unsigned> xn( m_source.dim(), 0 ); //non-zeroes
 
-        Log(8)<<"\nCompute stddevs start Time "<<Log.time();
+        // Log(8)<<"\nCompute stddevs start Time "<<Log.time();
 
         // compute m_means and stddevs for non-zeroes only first
         RowSetIterator* it = m_source.iterator();
@@ -64,7 +64,7 @@ private:
                 meansqu[iFeat] = meansqu[iFeat] * fPrev + val*val * fNew;
                 xn[iFeat] ++;
                 squNorm += val*val;
-                Log(16)<<"- "<<iFeat<<" "<<val<<" "<<m_means[iFeat]<<" "<<meansqu[iFeat]<<" "<<squNorm<<endl;
+                // Log(16)<<"- "<<iFeat<<" "<<val<<" "<<m_means[iFeat]<<" "<<meansqu[iFeat]<<" "<<squNorm<<endl;
             }
             m_avgSquNorm = m_avgSquNorm*r/(r+1) + squNorm/(r+1);
             //Log(6)<<"\nm_avgSquNorm "<<m_avgSquNorm;

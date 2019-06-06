@@ -269,7 +269,7 @@ class InitModel {
 	
 	if(coef==0.0) {
 	    string A87 = "contains explicit coefficients of 0.  These will be used as the starting point for optimization for the corresponding coefficients.  We remind the user that implicit coefficients of 0 in the OSPF, i.e. coefficients whose identifier is not mentioned, have no impact on the starting point of optimization.";   // for log file
-	    Log(5)<<"WARNING: "<<m_filename<<" , "<<A87<<endl;
+	    // Log(5)<<"WARNING: "<<m_filename<<" , "<<A87<<endl;
 	}
 
 	beta(fid,cid) = coef;

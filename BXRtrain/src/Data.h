@@ -809,15 +809,15 @@ public:
 
 	    // report
 	    for( unsigned k=0; k<c(); k++ ) {
-		Log(3)<<"\nZero vars for class "<<k<<":";
+		// Log(3)<<"\nZero vars for class "<<k<<":";
 		unsigned nzeroes=0;
 		for( unsigned j=0; j<d; j++ )
 		    if( zeroes.at(j).at(k) ) {
 			nzeroes++; 
 		    }
-		Log(3)<<" total "<<nzeroes;
+		// Log(3)<<" total "<<nzeroes;
 	    }
-	    std::cout << "Counted zeroes " << Log.time();
+	    // std::cout << "Counted zeroes " << Log.time();
 	    return zeroes;
 	}
 
@@ -984,7 +984,7 @@ private:
 			split.at(istr).resize( classtotals.at(istr) ); //grow each to proper size
 		}
 		StrataSplit( classtotals, nfolds, split );
-		ReportSplit( nfolds, split, Log(6) );
+		// ReportSplit( nfolds, split, Log(6) );
 
 		vector<unsigned> classindices( drs.c(), 0 ); //cases already met per class
 		i.rewind();

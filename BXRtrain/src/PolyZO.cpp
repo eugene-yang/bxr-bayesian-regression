@@ -147,8 +147,8 @@ inline double OneCoordStep(
     }
 
     dw = min( max(dw,-trustregion), trustregion );
-    if( !finite(dw) )
-        Log(1)<<"\nErrDW k dw_numerator dw_denominator dw "<<k<<" "<<dw_numerator<<" "<<dw_denominator<<" "<<dw;
+    // if( !finite(dw) )
+        // Log(1)<<"\nErrDW k dw_numerator dw_denominator dw "<<k<<" "<<dw_numerator<<" "<<dw_denominator<<" "<<dw;
     return dw;
 }
 
@@ -317,8 +317,8 @@ bool LRModel::stopTest(MemRowSetIterator& rowset, int nRows, int nClasses, const
 		double sum_abs_r = 0;
 		for( int i=0; i<nRows; i++ ) { 
 			for( int k=0; k<nClasses; k++ ) {
-				if( !finite(linearScores[k][i]) )
-					Log(1)<<"\nNAN wTX[k][i] k i "<<linearScores[k][i]<<" "<<k<<" "<<i;
+				// if( !finite(linearScores[k][i]) )
+				// 	Log(1)<<"\nNAN wTX[k][i] k i "<<linearScores[k][i]<<" "<<k<<" "<<i;
 				sum_abs_r += fabs(linearScores[k][i]);
 			}
 		}
@@ -412,7 +412,7 @@ void LRModel::ZOLRBinary(
     vector<double>& beta
     )
 {
-    Log(3)<<std::endl<<"Starting ZO model, Time "<<Log.time();
+    // Log(3)<<std::endl<<"Starting ZO model, Time "<<Log.time();
     //Log(3)<<std::endl<<bayesParam;
 
     unsigned nDesignVars = rowSet.dim();
@@ -421,7 +421,7 @@ void LRModel::ZOLRBinary(
     else    throw DimensionConflict(__FILE__,__LINE__);
 
     double common_variance = bayesParam.getPriorVar(); 
-    Log(11) << " common_variance = "         << common_variance << endl;
+    // Log(11) << " common_variance = "         << common_variance << endl;
     double p;
     if( Normal==bayesParam.getPriorType() ) {
 	// analogous to 1/(2*tau_j) from Equation 8 of GLM2007
@@ -472,7 +472,7 @@ void LRModel::ZOLRBinary(
 	}
     }
 
-    Log(11)<<m_penalty<<endl;
+    // Log(11)<<m_penalty<<endl;
 
     /*
     for( unsigned j=0; j<nDesignVars; j++ )
@@ -633,12 +633,12 @@ void LRModel::ZOLRBinary(
 		    rel_sum_abs_dr<thrConverge );//ZO stopping
 	//DL stopping || dot_product_rel_change<thrConverge );
 	
-        Log(7)<<"\nZO iteration "<<k+1
-	      <<"  Dot product abs sum "<<sum_abs_r
-	      <<"  Rel change "<<rel_sum_abs_dr //ZO stopping //DL stopping dot_product_rel_change
-	      <<"  Beta relative increment = "<<normdiff(beta,wPrev)/norm(wPrev)
-	      <<"  Beta components dropped: "<<ndropped
-	      <<"  Time "<<Log.time()<<endl;
+        // Log(7)<<"\nZO iteration "<<k+1
+	    //   <<"  Dot product abs sum "<<sum_abs_r
+	    //   <<"  Rel change "<<rel_sum_abs_dr //ZO stopping //DL stopping dot_product_rel_change
+	    //   <<"  Beta relative increment = "<<normdiff(beta,wPrev)/norm(wPrev)
+	    //   <<"  Beta components dropped: "<<ndropped
+	    //   <<"  Time "<<Log.time()<<endl;
         /*dbg
 	  Log(4)<<"\nBeta sparse:";
 	  for( unsigned i=0; i<w.size(); i++ )  if(0!=w[i]) Log(4)<<" "<<i<<":"<<w[i];  */
@@ -646,10 +646,10 @@ void LRModel::ZOLRBinary(
         wTXprev = wTX;
     }//---iter loop---
     
-    Log(7)<<std::endl<<"1-coord steps: "<<n1coordsteps<<"  Double tries: "<<ndoubltries<<" Slept: "<<nslept;
-    Log(5)<<std::endl<<( k>=iterLimit ? "Stopped by iterations limit"  : "Stopped by original ZO rule" );
-    Log(3)<<std::endl<<"Built ZO model "<<k<<" iterations, Time "<<Log.time() << endl; 
-    Log(0).flush();
+    // Log(7)<<std::endl<<"1-coord steps: "<<n1coordsteps<<"  Double tries: "<<ndoubltries<<" Slept: "<<nslept;
+    // Log(5)<<std::endl<<( k>=iterLimit ? "Stopped by iterations limit"  : "Stopped by original ZO rule" );
+    // Log(3)<<std::endl<<"Built ZO model "<<k<<" iterations, Time "<<Log.time() << endl; 
+    // Log(0).flush();
 //    return w;
 }
 
@@ -672,7 +672,7 @@ void LRModel::ZOLR(
     // for coefficients not mentioned in the individual prior file
 
     double common_variance = bayesParam.getPriorVar(); 
-    Log(11) << " common_variance = "         << common_variance << endl;
+    // Log(11) << " common_variance = "         << common_variance << endl;
     double p;
     if( Normal==bayesParam.getPriorType() ) {
 	// analogous to 1/(2*tau_j) from Equation 8 of GLM2007
@@ -724,12 +724,12 @@ void LRModel::ZOLR(
 	    }
 	}
     }
-    Log(11)<<m_penalty<<endl;
+    // Log(11)<<m_penalty<<endl;
 
     if( nDesignVars==m_priorMode.numFeatures() && nDesignVars==m_penalty.numFeatures() ) ;//ok
     else    throw DimensionConflict(__FILE__,__LINE__);
 
-    Log(3)<<std::endl<<"Starting PolyZO model 2, - Time "<<Log.time()<<endl;
+    // Log(3)<<std::endl<<"Starting PolyZO model 2, - Time "<<Log.time()<<endl;
     
     // initialize temp data
     vector< vector<double> > linearScores( nClasses, vector<double>(nRows,0.0) ); //dot products, by classes by cases
@@ -742,7 +742,7 @@ void LRModel::ZOLR(
 		if( beta(j,k) != 0.0 )
 		    linearScores[k][ ix->first ] += beta(j,k) * ix->second;
     }
-    Log(3)<<std::endl<<"Starting PolyZO model 3, - Time "<<Log.time() << endl;
+    // Log(3)<<std::endl<<"Starting PolyZO model 3, - Time "<<Log.time() << endl;
     
     ParamMatrix trustregion(nDesignVars, nClasses, 1.0);
     unsigned ndropped;
@@ -757,7 +757,7 @@ void LRModel::ZOLR(
     unsigned itr;
     unsigned steps=0, stepsskipped=0, stepsslept=0;
     ParamMatrix lastDiff = ParamMatrix(beta.numFeatures(), beta.numClasses());
-    Log(3)<<std::endl<<"Starting PolyZO model loop, - Time "<<Log.time()<<endl;
+    // Log(3)<<std::endl<<"Starting PolyZO model loop, - Time "<<Log.time()<<endl;
     for( itr=0; !converge; itr++ ) //---iterations loop--
     {
         double sum_abs_dr = 0.0;
@@ -791,12 +791,12 @@ void LRModel::ZOLR(
             for( unsigned j=0; j<nDesignVars; j++ ) //--design vars--
             {
                 if( fixedParams(j,k) ){  
-		    Log(11)<<"skipped:" << j << " " << k << endl; 
+		    // Log(11)<<"skipped:" << j << " " << k << endl; 
 		    stepsskipped++;
 		    continue;        //----->>--
                 }
                 else{
-		    Log(11)<<"steps: " << j << " " << k << endl;  
+		    // Log(11)<<"steps: " << j << " " << k << endl;  
 		    steps++;
 		}
                 if( beta(j,k)==m_priorMode(j,k) )
@@ -810,7 +810,7 @@ void LRModel::ZOLR(
                 double dw;
 		
 		const InvData::pair_range_type range = invData.getRange(j);
-		Log(11) << "invdata range: "<<range.second-range.first << endl; 
+		// Log(11) << "invdata range: "<<range.second-range.first << endl; 
 		
                 if( Normal==bayesParam.getPriorType() )
                 {
@@ -821,7 +821,7 @@ void LRModel::ZOLR(
                         dw_numerator, dw_denominator, range, invData, k, linearScores, 
 			linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
 		    
-		    Log(11) <<"dw_numerator="<<dw_numerator<<"; dw_denominator=" << dw_denominator 
+		    // Log(11) <<"dw_numerator="<<dw_numerator<<"; dw_denominator=" << dw_denominator 
 		    <<"; dw="<<dw<<endl; 
                 }
                 else { //Laplace
@@ -843,14 +843,14 @@ void LRModel::ZOLR(
 			
 			if (skewAllowsPositiveDirection) { 
                             dwPlus = OneCoordStep( -m_penalty(j,k), 0, range, invData, k, linearScores, linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
-                            if(!finite(dwPlus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
+                            // if(!finite(dwPlus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
 			    else if (dwPlus < 0) dwPlus = 0;
 			}
 
 			bool positiveDirectionSucceeded = (dwPlus > 0);
 			if (!positiveDirectionSucceeded && skewAllowsNegativeDirection) {
 			    dwMinus = OneCoordStep( m_penalty(j,k), 0, range, invData, k, linearScores, linearScores[k], exponentialScores, S, trustregion(j,k), highAccuracy );
-                            if(!finite(dwMinus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
+                            // if(!finite(dwMinus))   Log(1)<<"\nInfDW zero neg "<<j<<" "<<k;
 			    else if (dwMinus > 0) dwMinus = 0;
 			}
 			
@@ -880,9 +880,9 @@ void LRModel::ZOLR(
                     S[i] -= exponentialScores[i]; 
 		    S[i] += e_r;
                     exponentialScores[i] = e_r;                
-		    Log(11)<<"i="<<i<<";x="<<x<<"; linearScores[k][i]="<<linearScores[k][i]
-			   <<";dwkTX[i]="<<dwkTX[i]<<";e_r="<<e_r<<";S[i]="<<S[i]
-			   <<";expScore[i]="<<exponentialScores[i]<<endl;  
+		    // Log(11)<<"i="<<i<<";x="<<x<<"; linearScores[k][i]="<<linearScores[k][i]
+			//    <<";dwkTX[i]="<<dwkTX[i]<<";e_r="<<e_r<<";S[i]="<<S[i]
+			//    <<";expScore[i]="<<exponentialScores[i]<<endl;  
                 }
                 //trust region update
 		trustregion(j,k) = max( 2*fabs(dw), trustregion(j,k)/2 );   //2*fabs(dw)*1.1
@@ -898,7 +898,7 @@ void LRModel::ZOLR(
 	    }
 
 
-	    Log(7)<<"iteration loop " << itr << ", Class "<<k<<" - Time "<<Log.time()<<endl;
+	    // Log(7)<<"iteration loop " << itr << ", Class "<<k<<" - Time "<<Log.time()<<endl;
 
 	}//--classes-- k --
 	
@@ -907,12 +907,12 @@ void LRModel::ZOLR(
 	
 	iterationLogger(rowSet, bayesParam, beta, m_penalty, itr);
 	
-	Log(8)<<"iteration loop " << itr << ", - Time "<<Log.time()<<endl;
+	// Log(8)<<"iteration loop " << itr << ", - Time "<<Log.time()<<endl;
 
     }//---iter loop---
     
-    Log(3)<<std::endl<<"Built ZO model "<<itr<<" iterations, Time "<<Log.time()<<endl;
-    Log(5)<<"\nTotal steps "<<steps<<", skipped "<<stepsskipped<<", slept "<<stepsslept<<endl;
+    // Log(3)<<std::endl<<"Built ZO model "<<itr<<" iterations, Time "<<Log.time()<<endl;
+    // Log(5)<<"\nTotal steps "<<steps<<", skipped "<<stepsskipped<<", slept "<<stepsslept<<endl;
 }
 
 
@@ -933,12 +933,12 @@ void LRModel::iterationLogger(MemRowSetIterator& rowSet, const BayesParameter& b
     }
     */
 
-    Log(8) << "Iteration " << (itr+1) << '\t' <<
-	m_convergenceScore << '\t' <<
-	likelihood << '\t' <<
-	Log.time() << '\t' <<
-	m_trainingSetAccuracy << '/' << rowSet.n() << '\t' <<
-	holdoutAccuracy << '/' << holdoutRows<<endl;
+    // Log(8) << "Iteration " << (itr+1) << '\t' <<
+	// m_convergenceScore << '\t' <<
+	// likelihood << '\t' <<
+	// Log.time() << '\t' <<
+	// m_trainingSetAccuracy << '/' << rowSet.n() << '\t' <<
+	// holdoutAccuracy << '/' << holdoutRows<<endl;
 }
 
 vector<int> LRModel::buildWordIndexForSample(RowSetIterator &drs, unsigned dim) const {
@@ -985,7 +985,7 @@ vector<double>* LRModel::hyperParamLoop( MemRowSetIterator& drs,
     
     for( unsigned iparam=0; iparam<planSize; iparam++ )
     {
-        Log(5)<<"\nHyperparameter plan #"<<iparam+1<<" value="<<(hpPlan.getPlan()[iparam]);
+        // Log(5)<<"\nHyperparameter plan #"<<iparam+1<<" value="<<(hpPlan.getPlan()[iparam]);
         const BayesParameter& localBayesParam = hpPlan.getInstBayesParam( iparam );
 	
         // build the model
@@ -1013,7 +1013,7 @@ double LRModel::AvgSquNorm(RowSetStats& stats) const { //separated from class St
         if (j==0) //HACK: drop constant term
             continue;
         s += stats.Means()[j]*stats.Means()[j] + stats.Stddevs()[j]*stats.Stddevs()[j];
-	Log(16)<<"AvgSquNorm: "<<stats.Means()[j]<<";"<<stats.Stddevs()[j]<<endl;
+	// Log(16)<<"AvgSquNorm: "<<stats.Means()[j]<<";"<<stats.Stddevs()[j]<<endl;
     }
     return s;
 }
@@ -1034,7 +1034,7 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
 		1.0/avgsqunorm  : sqrt(avgsqunorm*2.0);
             localBayesParam = BayesParameter( hyperParamPlan.getPriorType(), hpar, hyperParamPlan.getSkew() );
 
-            Log(5)<<"\nAverage square norm (no const term) "<<avgsqunorm<<" Hyperparameter "<<hpar<<endl;
+            // Log(5)<<"\nAverage square norm (no const term) "<<avgsqunorm<<" Hyperparameter "<<hpar<<endl;
         }
         else if( hyperParamPlan.isFixed() )
             localBayesParam = hyperParamPlan.getBp();
@@ -1043,10 +1043,10 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
 
 	MemRowSetIterator& drsIterator = drs;
         if( ModelType::ZO==m_modelType.getOptimizerType() ) {
-	    Log(0) << "before invData initiation " << Log.time() << endl;  // for time track
+	    // Log(0) << "before invData initiation " << Log.time() << endl;  // for time track
             InvData invData(drsIterator, drs.c(), drs.dim(), rowIndex );
 	    // invData.print();
-	    Log(0) << "after invData initiation  " << Log.time() << endl; // for time track
+	    // Log(0) << "after invData initiation  " << Log.time() << endl; // for time track
 
             invokeZOLR(drsIterator, invData, localBayesParam, fixedParams, m_beta, m_modelType.isBinary());
         }
@@ -1070,7 +1070,7 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
         unsigned nfolds = hyperParamPlan.getNfolds(); //10
         if( nfolds>drs.n() ) {
             nfolds = drs.n();
-            Log(1)<<"\nWARNING: more folds requested than there are data. Reduced to "<<nfolds;
+            // Log(1)<<"\nWARNING: more folds requested than there are data. Reduced to "<<nfolds;
         }
         unsigned nruns = hyperParamPlan.getNruns(); //2
         if( nruns>nfolds )  nruns = nfolds;
@@ -1090,7 +1090,7 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
                     else y++;
                 }
             foldsAlreadyRun[ifold] = true;
-            Log(5)<<"\nCross-validation "<<nfolds<<"-fold; Run "<<irun+1<<" out of "<<nruns<<", fold "<<ifold;
+            // Log(5)<<"\nCross-validation "<<nfolds<<"-fold; Run "<<irun+1<<" out of "<<nruns<<", fold "<<ifold;
 	    
             //training
 	    MemRowSetIterator* cvtrain = sampler.getSample(ifold, false);
@@ -1102,10 +1102,10 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
 							     m_modelType, hyperParamPlan, //bayesParameter, hpplan, 
 							     fixedParams);
 	    
-            Log(5)<<"\nCross-validation test log-likelihood: ";
+            // Log(5)<<"\nCross-validation test log-likelihood: ";
             for( unsigned iparam=0; iparam<planSize; iparam++ ) {
                 double eval = (*loglikelihoods)[iparam];
-                Log(5)<<eval<<" ";
+                // Log(5)<<eval<<" ";
                 //arith ave of loglikeli, i.e. geometric mean of likelihoods
                 lglkliMean[iparam] = lglkliMean[iparam]*irun/(irun+1) + eval/(irun+1);
                 lglkliMeanSqu[iparam] = lglkliMeanSqu[iparam]*irun/(irun+1) + eval*eval/(irun+1);
@@ -1125,7 +1125,7 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
         // best by cv
         double bestEval = - numeric_limits<double>::max();
         unsigned bestParam = unsigned(-1);
-        Log(6)<<"\nCross-validation results - hyperparameter values, "
+        // Log(6)<<"\nCross-validation results - hyperparameter values, "
 	      <<(Laplace==hyperParamPlan.getPriorType()?"prior var, ":"")
 	      <<"cv mean loglikelihood, std.error:";
         for( unsigned i=0; i<planSize; i++ ) {
@@ -1133,10 +1133,10 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
                 bestEval = lglkliMean[i];
                 bestParam = i;
             }
-            Log(6)<<"\n\t"<<hpplan[i];
-            if(Laplace==hyperParamPlan.getPriorType()) 
-                Log(6)<<"\t"<<hyperpar2var(hyperParamPlan.getPriorType(),hyperParamPlan.getSkew(),hpplan[i]);
-            Log(6)<<"\t"<<lglkliMean[i]<<"\t"<<lglkliStdErr[i];
+            // Log(6)<<"\n\t"<<hpplan[i];
+            // if(Laplace==hyperParamPlan.getPriorType()) 
+            //    Log(6)<<"\t"<<hyperpar2var(hyperParamPlan.getPriorType(),hyperParamPlan.getSkew(),hpplan[i]);
+            // Log(6)<<"\t"<<lglkliMean[i]<<"\t"<<lglkliStdErr[i];
         }
         if( bestParam==unsigned(-1) )
             throw runtime_error("No good hyperparameter value found");
@@ -1148,14 +1148,14 @@ void LRModel::tuneModel(   MemRowSetIterator & drs,
                     bestParam = i;
                     break;
                 }
-            Log(6)<<"\nError bar rule selected hyperparameter value "<<hpplan[bestParam]<<" instead of "<<hpplan[oldBestParam];
+            // Log(6)<<"\nError bar rule selected hyperparameter value "<<hpplan[bestParam]<<" instead of "<<hpplan[oldBestParam];
         }
-        Log(3)<<"\nBest hyperparameter value "<<hpplan[bestParam]<<" cv-average loglikely "<<bestEval;
+        // Log(3)<<"\nBest hyperparameter value "<<hpplan[bestParam]<<" cv-average loglikely "<<bestEval;
 
         //build final model
         m_bayesParam = hyperParamPlan.getInstBayesParam( bestParam );
 
-        Log(3)<<std::endl<<"Starting final model after cv, Time "<<Log.time();
+        // Log(3)<<std::endl<<"Starting final model after cv, Time "<<Log.time();
 	MemRowSetIterator drsIterator = MemRowSetIterator(drs);
         if( ModelType::ZO==m_modelType.getOptimizerType() ) {
             InvData invData(drsIterator, drs.c(), drs.dim(), rowIndex );
@@ -1192,23 +1192,23 @@ void LRModel::train(MemRowSet& trainData, WriteModel& modelFile, IRowSet* heldou
     FixedParams fixedParams( m_modelType.isAllZeroClassMode() ? trainData.allzeroes() : dummy,
 			     m_individualPriorsHolder,
 			     classid, drs.dim(), numClasses );
-    Log(11)<<"FIXEDPARAMS "<<fixedParams<<endl;
+    // Log(11)<<"FIXEDPARAMS "<<fixedParams<<endl;
 
-    Log(3)<<"\nTotal parameters: "<<drs.dim()*numClasses<<"\t Of them fixed: "
-	  <<fixedParams.count()<<endl;
+    // Log(3)<<"\nTotal parameters: "<<drs.dim()*numClasses<<"\t Of them fixed: "
+	//   <<fixedParams.count()<<endl;
 
     // m_beta initialization, read in the init file
     InitModel initfilemodel(m_initFName, m_metadata, bayesParameter, 
 			fixedParams, *m_individualPriorsHolder, m_beta);
-    Log(11)<<"coef after reading init file:" <<endl;
-    Log(11)<< m_beta << endl;
+    // Log(11)<<"coef after reading init file:" <<endl;
+    // Log(11)<< m_beta << endl;
 
     MemRowSetIterator* p_workingRs = new MemRowSetIterator(drs);
 
     RowSetStats stats(drs);
     RowSetIterator* it = drs.iterator();
 
-    Log(0) << "\n Check 1 " << Log.time() << endl;
+    // Log(0) << "\n Check 1 " << Log.time() << endl;
 
     //this sets m_beta and m_bayesParam
     tuneModel( *p_workingRs, //bayesParameter, 
@@ -1218,7 +1218,7 @@ void LRModel::train(MemRowSet& trainData, WriteModel& modelFile, IRowSet* heldou
 	       stats );
     
     cout<<m_beta<<endl;
-    Log(0) << "\n Check 2 " << Log.time() << endl;
+    // Log(0) << "\n Check 2 " << Log.time() << endl;
     
 
     //Beta components dropped finally
@@ -1235,16 +1235,16 @@ void LRModel::train(MemRowSet& trainData, WriteModel& modelFile, IRowSet* heldou
     }
     
     // report model
-    Log(10)<<std::endl<<"Beta:";
-    m_beta.displayModel( Log(10), drs );
+    // Log(10)<<std::endl<<"Beta:";
+    // m_beta.displayModel( Log(10), drs );
 
     // resubstitution - evaluate
     vector<unsigned> resubst( drs.n() );
     for( unsigned i=0; i<drs.n(); i++ )
         resubst[i] = argmax( resubstScore[i] );
-    Log(3)<<"\n\n---Resubstitution results---";
-    Log(3)<<"\nConfusion Table:";   //TODO? make it Log(6)
-	makeConfusionTable( Log(3), drs.getRowSetMetadata(), y, resubst );
+    // Log(3)<<"\n\n---Resubstitution results---";
+    // Log(3)<<"\nConfusion Table:";   //TODO? make it Log(6)
+	// makeConfusionTable( Log(3), drs.getRowSetMetadata(), y, resubst );
 
     double trainLogLikeli = LogLikelihood( drs, m_modelType, m_beta );
     Log(3)<<"Training set loglikelihood "<<setprecision(12)<<trainLogLikeli
@@ -1252,13 +1252,13 @@ void LRModel::train(MemRowSet& trainData, WriteModel& modelFile, IRowSet* heldou
     double logPrior = LogPrior( m_bayesParam, m_priorMode, m_penalty, m_beta );
     Log(3)<<"Log prior (penalty) "<<logPrior<<" Log posterior "<<trainLogLikeli+logPrior<<endl;
 
-    makeCT2by2( Log(3), drs.getRowSetMetadata(), y, resubstScore, resubst );
+    // makeCT2by2( Log(3), drs.getRowSetMetadata(), y, resubstScore, resubst );
 
-    if( Log.level()>=12 ) {
-        Log()<<"Resubstitution Scores";
-        for( unsigned i=0; i<drs.n(); i++ )
-            Log()<<endl<<resubstScore[i]<<":"<<resubst[i];
-    }
+    // if( Log.level()>=12 ) {
+    //     Log()<<"Resubstitution Scores";
+    //     for( unsigned i=0; i<drs.n(); i++ )
+    //         Log()<<endl<<resubstScore[i]<<":"<<resubst[i];
+    // }
 
     m_bTrained = true;
     modelFile.WriteParams( m_modelType, m_designParameter, trainData.getRowSetMetadata(),  m_beta );
@@ -1331,21 +1331,21 @@ void LRModel::test(PlainYRowSet& testData, WriteModel& modelFile)
     }
 	delete it;
 
-    Log(1)<<"\n\n---Validation results---";
-    Log(1)<<"\nCases of trained classes "<<n<<"  Other "<<nAlien<<"  Total "<<n+nAlien;
-    Log(1)<<"\nConfusion Table:";
+    // Log(1)<<"\n\n---Validation results---";
+    // Log(1)<<"\nCases of trained classes "<<n<<"  Other "<<nAlien<<"  Total "<<n+nAlien;
+    // Log(1)<<"\nConfusion Table:";
 
 
-	displayConfusionTable(Log(1), testData.getRowSetMetadata(), CT);
-    Log(1)<<"\nTest set loglikelihood "<<logLhood<<" Average "<<logLhood/n;
+	// displayConfusionTable(Log(1), testData.getRowSetMetadata(), CT);
+    // Log(1)<<"\nTest set loglikelihood "<<logLhood<<" Average "<<logLhood/n;
 
-	for( unsigned k=0; k<testData.c(); k++ ) {
-		Log(1)<<"\n\nOne-vs-All view: Class "<<testData.getRowSetMetadata().getClassId(k);
-        double roc = calcROC( allScores, allYs, k );
-        displayCT2by2( Log(1), TP[k], FP[k], FN[k], n-TP[k]-FP[k]-FN[k] , roc );
-    }
+	// for( unsigned k=0; k<testData.c(); k++ ) {
+	// 	Log(1)<<"\n\nOne-vs-All view: Class "<<testData.getRowSetMetadata().getClassId(k);
+    //     double roc = calcROC( allScores, allYs, k );
+    //     displayCT2by2( Log(1), TP[k], FP[k], FN[k], n-TP[k]-FP[k]-FN[k] , roc );
+    // }
 
-    Log(3)<<endl<<"Time "<<Log.time();
+    // Log(3)<<endl<<"Time "<<Log.time();
 
 }
 

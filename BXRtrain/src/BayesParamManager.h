@@ -189,8 +189,8 @@ public:
 	
         if( m_plan.size()>1 ) {
             sortPlan();
-            Log(6)<<"\nHyperparameter plan sorted by penalty decreasing:\n";
-            for( unsigned i=0; i<m_plan.size(); i++ ) Log(6)<<" "<<m_plan[i];
+            // Log(6)<<"\nHyperparameter plan sorted by penalty decreasing:\n";
+            // for( unsigned i=0; i<m_plan.size(); i++ ) Log(6)<<" "<<m_plan[i];
         }
     }
     HyperParamPlan( enum PriorType priorType, double hypval, double skew_  ) : m_search(false) { //fixed hyperpar

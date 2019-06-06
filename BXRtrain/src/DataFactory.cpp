@@ -20,15 +20,15 @@ void DataFactory::setTestAndTrainFileSpec(
     indpriorFName = indpriorFile_;
     m_refClass = strRefClassId_;
 
-    Log(3) <<"\nTime: " << Log.time();
+    // Log(3) <<"\nTime: " << Log.time();
 
     MakeSparseMatrix( trainFName);  // ver 4.0
 
-    Log(3) <<"\nTime: " << Log.time();
-    Log(3)<<"\nCases in training data: "<<m_Mtrain.size();
+    // Log(3) <<"\nTime: " << Log.time();
+    // Log(3)<<"\nCases in training data: "<<m_Mtrain.size();
     
-    Log(3)<<"\nFeatures in training data: "<<m_featSelect.size();
-    Log(3)<<"\nClasses in training data: "<<m_classes.size();
+    // Log(3)<<"\nFeatures in training data: "<<m_featSelect.size();
+    // Log(3)<<"\nClasses in training data: "<<m_classes.size();
     
 }
 
@@ -182,7 +182,7 @@ void DataFactory::MakeSparseMatrix( string fName ) {
 	    #endif
 
 	    double value = atof(featurepair.substr(pcol+1).c_str());
-	    Log(25)<<" "<<feature<<":"<<value; // for test
+	    // Log(25)<<" "<<feature<<":"<<value; // for test
 
 	    if(value!=0.0) {
 		x.insert(feature,value); 
@@ -248,7 +248,7 @@ IndividualPriorsHolder* DataFactory::createIndPriorHolder() {
     if( !ifs.good() )
 	throw runtime_error(string("Cannot open individual priors file ")
 			    + indpriorFName);
-    Log(10)<<"\nReading  individual priors file "<<indpriorFName;
+    // Log(10)<<"\nReading  individual priors file "<<indpriorFName;
     
     int nrows = 0;
     set<int> nonactivefeats;
@@ -299,8 +299,8 @@ IndividualPriorsHolder* DataFactory::createIndPriorHolder() {
 	    else if (prior.mode !=0 )
 		nonactiveCoeflevelFeats[iclass][feat] = prior.mode ;
 	    
-	    Log(10)<<"- "<<iclass<<" "<<feat<<" "
-		   <<prior.mode<<" "<<prior.var<<" "<<prior.skew<<endl;
+	    // Log(10)<<"- "<<iclass<<" "<<feat<<" "
+		//   <<prior.mode<<" "<<prior.var<<" "<<prior.skew<<endl;
 	}
 	else {//feature-level prior
 	    std::istringstream rowbuf2( buf); //read whole line from the begining
@@ -326,7 +326,7 @@ IndividualPriorsHolder* DataFactory::createIndPriorHolder() {
 	    else if (prior.mode!=0) 
 		nonactiveFeats[feat] = prior.mode;
 	    
-	    Log(10)<<"\n- "<<feat<<" "<<prior.mode<<" "<<prior.var<<" "<<prior.skew;
+	    // Log(10)<<"\n- "<<feat<<" "<<prior.mode<<" "<<prior.var<<" "<<prior.skew;
 	}
 	nrows ++;
     } // end of while

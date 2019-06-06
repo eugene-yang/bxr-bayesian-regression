@@ -159,7 +159,7 @@ public:
     InvData(RowSetIterator& it, unsigned c, unsigned dim, const vector<int>& wordIndex ) : m_wordIndex(wordIndex), m_c(c)
     {
 
-	Log(3)<<std::endl<<"Starting InvData initialization 1, - Time "<<Log.time();
+	// Log(3)<<std::endl<<"Starting InvData initialization 1, - Time "<<Log.time();
 
 	try{	
 	    data = vector< pair<unsigned, double> >(wordIndex.at(wordIndex.size()-1));
@@ -170,9 +170,9 @@ public:
 	}
 
 	vector<unsigned> wordCounter = vector<unsigned>(dim, 0);
-	Log(20)<<endl; cout<<data.size()<<","<<data.capacity()<<","<<data.max_size()<<endl;
+	// Log(20)<<endl; cout<<data.size()<<","<<data.capacity()<<","<<data.max_size()<<endl;
 
-	Log(3)<<std::endl<<"Starting InvData initialization 2, - Time "<<Log.time();
+	// Log(3)<<std::endl<<"Starting InvData initialization 2, - Time "<<Log.time();
 	it.rewind();
         for( nrows=0; it.next(); nrows++ ) {
             const SparseVector& x=it.xsparse();
@@ -184,7 +184,7 @@ public:
             m_y.push_back( it.y() );
         }
 	
-	Log(3)<<"Starting InvData initialization 3, - Time "<<Log.time()<<endl;
+	// Log(3)<<"Starting InvData initialization 3, - Time "<<Log.time()<<endl;
     }
     
     const pair_range_type getRange(unsigned var) const {
