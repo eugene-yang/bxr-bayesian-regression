@@ -1,0 +1,7 @@
+*.o
+BXRtrain
+BXRclassify
+
+bin/
+.vscode/
+__pycache__
