@@ -24,35 +24,39 @@ def parseargs():
                             stderr = subprocess.PIPE, stdout = subprocess.PIPE)
     """
 
-    parser = argparse.ArgumentParser(description="")
+    parser = argparse.ArgumentParser(description="BXR Wrapper with Vowpal Wabbit interface -- FakeVW. \n"
+                                                 "Please but BXRtrain binary in environment variable using name `BXRtrain` "
+                                                 "and put the BXR prior file(if used) in variable `BXR_prior`.")
 
     # vw options
-    parser.add_argument("-d", "--data", type=str, default="")
+    parser.add_argument("-d", "--data", type=str, help="Training data file in VW format.")
 
-    parser.add_argument("-c", "--cache", action="store_true")
-    parser.add_argument("--cache_file", type=str, default="")
-    parser.add_argument("-k", "--kill_cache", action="store_true")
+    parser.add_argument("-c", "--cache", action="store_true", help="Save the cached BXR format file")
+    parser.add_argument("--cache_file", type=str, default="", help="File name for the cached BXR format file. "
+                                                                   "Default using <DATA>.bxrcache.")
+    parser.add_argument("-k", "--kill_cache", action="store_true", help="Always create new cached file.")
 
-    parser.add_argument("--loss_function", type=str, default="logistic") # ignore
-    parser.add_argument("--passes", type=int, default=1) # ignore
+    parser.add_argument("--loss_function", type=str, default="logistic", help="Tyle of loss function, ALWAYS IGNORED.") # ignore
+    parser.add_argument("--passes", type=int, default=1, help="Number of passes over training data, ALWAYS IGNORED.") # ignore
 
-    parser.add_argument("--noconstant", action="store_true") # ignore
+    parser.add_argument("--noconstant", action="store_true", help="Fitting intercept, ALWAYS IGNORED.") # ignore
 
-    parser.add_argument("-l", "--learning_rate", type=float, default=0.5)
-    parser.add_argument("--l1", type=float, default=0.0)
-    parser.add_argument("--l2", type=float, default=0.0)
+    parser.add_argument("-l", "--learning_rate", type=float, default=0.5, help="Learning rate, ALWAYS IGNORED.")
+    parser.add_argument("--l1", type=float, default=0.0, help="Variance when using L1. Using L1 when value is non-zero.")
+    parser.add_argument("--l2", type=float, default=0.0, help="Variance when using L2. Using L2 when value is non-zero.")
 
-    parser.add_argument("-b", "--bit_precision", type=int, default=25) # ignore
+    parser.add_argument("-b", "--bit_precision", type=int, default=25, help="Bit precision, ALWAYS IGNORED.") # ignore
 
-    parser.add_argument("-f", "--final_regressor", type=str, default="") # ignore
+    parser.add_argument("-f", "--final_regressor", type=str, default="", help="ALWAYS IGNORED.") # ignore
 
-    parser.add_argument("--readable_model", type=str, required=True)
+    parser.add_argument("--readable_model", type=str, required=True, help="File name for the final readable model. "
+                                                                          "Always use this argument for model destination")
 
     # for fake vw
-    parser.add_argument("--keep_bxrmodel", action="store_true")
-    parser.add_argument("--show_bxr_stdout", action="store_true")
+    parser.add_argument("--keep_bxrmodel", action="store_true", help="Keep the original model output from BXR.")
+    parser.add_argument("--show_bxr_stdout", action="store_true", help="Show BXR stdout to console.")
 
-    parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--verbose", action="store_true", help="Verbose output")
 
     ret = parser.parse_args()
     if ret.cache_file == "":
@@ -61,7 +65,7 @@ def parseargs():
     # return parser
 
 def main():
-    print("Running fake VW --> actually BXR")
+    print("=== Running Fake VW --> actually BXR ===\n")
 
     args = parseargs()
     if __BXR_path is None:
@@ -81,6 +85,7 @@ def main():
         raise ValueError("Does not support elasticnet -- setting both L1 and L2 penalty.")
     
     if __BXR_prior is not None:
+        comment("using prior file", __BXR_prior)
         bxr_args += ["-I", __BXR_prior]
     
 
@@ -116,6 +121,8 @@ def main():
     
     comment("converting BXR model file")
     Model_bxr2vw( open( bxr_model_fn ), open( args.readable_model, "w+" ) )
+
+    print("Done")
 
     # post processing
     if not args.cache:
